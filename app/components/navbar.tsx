@@ -22,151 +22,150 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav
-      className={`
-        w-full max-w-7xl mx-auto
-        px-4 md:px-6 py-3
-        flex items-center justify-between
-        relative transition-all duration-300
+    <div className="fixed top-0 left-0 w-full z-50 flex justify-center pt-4">
+      <nav
+        className={`w-full max-w-7xl
+    mx-auto px-4 md:px-6 py-3
+    flex items-center justify-between
+    transition-all duration-300 rounded-full
 
-        ${
-          scrolled
-            ? "fixed top-4 left-1/2 -translate-x-1/2 bg-white shadow-xl z-50 rounded-full"
-            : "bg-white rounded-full shadow-lg"
-        }
-      `}
-    >
-
-      {/* Logo */}
-      <div className="flex items-center gap-2 md:gap-3">
-        <Image
-          src="/Logo.svg"
-          alt="Elimisha Watoto Logo"
-          width={200}
-          height={200}
-          priority
-        />
-      </div>
-
-      {/* Desktop Menu */}
-      <ul className="hidden md:flex items-center gap-8 font-medium text-gray-700">
-
-        <li>
-          <Link href="/" className="text-orange-500">
-            Home
-          </Link>
-        </li>
-
-        <li>
-          <Link href="/about" className="hover:text-orange-500 transition">
-            About
-          </Link>
-        </li>
-
-        <li>
-          <Link href="/contact" className="hover:text-orange-500 transition">
-            Contact
-          </Link>
-        </li>
-
-      </ul>
-
-      {/* Desktop Button */}
-{/* Desktop Button */}
-{/* Desktop Button */}
-<Link
-  href="/contact"
-  className="hidden md:flex items-center gap-3 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full font-medium transition group"
->
-  GET IN TOUCH
-
-  {/* Icon Circle */}
-  <span className="flex items-center justify-center w-7 h-7 bg-white text-orange-500 rounded-full transition group-hover:translate-x-1">
-    <ArrowRight size={16} />
-  </span>
-</Link>
-
-
-
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="md:hidden text-gray-700"
+    ${scrolled
+            ? "bg-white shadow-xl"
+            : "bg-white/90 backdrop-blur-md shadow-lg"
+          }
+  `}
       >
-        {open ? (
-          // Close Icon
-          <svg
-            className="w-7 h-7"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        ) : (
-          // Hamburger
-          <svg
-            className="w-7 h-7"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        )}
-      </button>
-
-      {/* Mobile Menu */}
-      {open && (
-        <div className="absolute top-full left-0 w-full mt-3 bg-white rounded-3xl shadow-xl p-6 md:hidden">
-
-          <ul className="flex flex-col gap-5 text-gray-700 font-medium">
-
-            <li>
-              <Link href="/" onClick={() => setOpen(false)}>
-                Home
-              </Link>
-            </li>
-
-            <li>
-              <Link href="/about" onClick={() => setOpen(false)}>
-                About
-              </Link>
-            </li>
-
-            <li>
-              <Link href="/contact" onClick={() => setOpen(false)}>
-                Contact
-              </Link>
-            </li>
-
-            <Link
-            href="/contact"
-            onClick={() => setOpen(false)}
-            className="flex items-center justify-center gap-3 bg-orange-500 text-white py-2 rounded-full mt-2 font-medium group"
-            >
-            Get In Touch
-
-            <span className="flex items-center justify-center w-7 h-7 bg-white text-orange-500 rounded-full transition group-hover:translate-x-1">
-                <ArrowRight size={16} />
-            </span>
-            </Link>
 
 
-          </ul>
+        {/* Logo */}
+        <div className="flex items-center gap-2 md:gap-3">
+          <Image
+            src="/Logo.svg"
+            alt="Elimisha Watoto Logo"
+            width={200}
+            height={200}
+            priority
+          />
         </div>
-      )}
 
-    </nav>
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex items-center gap-8 font-medium text-gray-700">
+
+          <li>
+            <Link href="/" className="text-orange-500">
+              Home
+            </Link>
+          </li>
+
+          <li>
+            <Link href="/about" className="hover:text-orange-500 transition">
+              About
+            </Link>
+          </li>
+
+          <li>
+            <Link href="/contact" className="hover:text-orange-500 transition">
+              Contact
+            </Link>
+          </li>
+
+        </ul>
+
+        {/* Desktop Button */}
+        {/* Desktop Button */}
+        {/* Desktop Button */}
+        <Link
+          href="/contact"
+          className="hidden md:flex items-center gap-3 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full font-medium transition group"
+        >
+          GET IN TOUCH
+
+          {/* Icon Circle */}
+          <span className="flex items-center justify-center w-7 h-7 bg-white text-orange-500 rounded-full transition group-hover:translate-x-1">
+            <ArrowRight size={16} />
+          </span>
+        </Link>
+
+
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden text-gray-700"
+        >
+          {open ? (
+            // Close Icon
+            <svg
+              className="w-7 h-7"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            // Hamburger
+            <svg
+              className="w-7 h-7"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          )}
+        </button>
+
+        {/* Mobile Menu */}
+        {open && (
+          <div className="absolute top-full left-0 w-full mt-3 bg-white rounded-3xl shadow-xl p-6 md:hidden">
+
+            <ul className="flex flex-col gap-5 text-gray-700 font-medium">
+
+              <li>
+                <Link href="/" onClick={() => setOpen(false)}>
+                  Home
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/about" onClick={() => setOpen(false)}>
+                  About
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/contact" onClick={() => setOpen(false)}>
+                  Contact
+                </Link>
+              </li>
+
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-center gap-3 bg-orange-500 text-white py-2 rounded-full mt-2 font-medium group"
+              >
+                Get In Touch
+
+                <span className="flex items-center justify-center w-7 h-7 bg-white text-orange-500 rounded-full transition group-hover:translate-x-1">
+                  <ArrowRight size={16} />
+                </span>
+              </Link>
+            </ul>
+          </div>
+        )}
+
+      </nav>
+    </div>
   );
 }

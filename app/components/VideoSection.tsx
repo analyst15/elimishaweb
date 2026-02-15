@@ -79,7 +79,7 @@ export default function VideoSection() {
         </div>
 
         {/* Description */}
-        <p className="max-w-3xl mx-auto mt-8 text-black text-left text-sm sm:text-base leading-relaxed">
+        <p className="w-full mx-auto mt-8 text-black text-left text-sm sm:text-base leading-relaxed">
         The Elimisha Watoto Foundation was born out of the need in our communities to provide a hopeful future for bright promising but otherwise underprivileged students. The programme aims to uplift such students through financial and moral support, by providing a four-year scholarship at national level for identified beneficiaries aged between 13 and 17 years, including their tuition fees, school necessities such as uniforms, and miscellaneous costs like transport and pocket money. In addition, we will provide capacity building initiatives for the students to ensure they are equipped with critical life skills, to set them at par with their more fortunate counterparts in school. This effort will include offering them select courses such as leadership development and time management.
 
         Through their four-year journey, our beneficiaries will be attached to a student relations officer to closely monitor their academic and personal development progress, offer appropriate advice and connect them to forums such as those involving tertiary scholarships, while fostering their growth. Ultimately, we seek to mould well-rounded human beings who are ready to adjust well as global citizens their previous circumstances notwithstanding—persons who will serve as future leaders.

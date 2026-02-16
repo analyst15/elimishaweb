@@ -3,6 +3,7 @@ import Navbar from "./components/navbar";
 import Hero from "./components/Hero";
 import QuoteSection from "./components/QuoteSection";
 import VideoSection from "./components/VideoSection";
+import ImpactSection from "./components/ImpactSection";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Hero />
       <QuoteSection />
       <VideoSection />
+      <ImpactSection />
       </main>
     </div>
   );

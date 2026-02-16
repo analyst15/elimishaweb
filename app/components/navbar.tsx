@@ -3,12 +3,20 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  ChevronRight,
+} from "lucide-react";
+
 
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [openProgrammes, setOpenProgrammes] = useState(false);
+  const [openTertiary, setOpenTertiary] = useState(false);
+
 
   // Detect scroll
   useEffect(() => {
@@ -51,18 +59,82 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-8 font-medium text-gray-700">
 
+          {/* Home */}
           <li>
             <Link href="/" className="text-orange-500">
               Home
             </Link>
           </li>
 
+          {/* About */}
           <li>
             <Link href="/about" className="hover:text-orange-500 transition">
               About
             </Link>
           </li>
 
+          {/* Programmes Dropdown */}
+          <li className="relative">
+
+            <button
+              onClick={() => setOpenProgrammes(!openProgrammes)}
+              className="flex items-center gap-1 hover:text-orange-500 transition"
+            >
+              Programmes
+              <ChevronDown
+                size={16}
+                className={`transition ${openProgrammes ? "rotate-180" : ""
+                  }`}
+              />
+
+            </button>
+
+            {/* Dropdown */}
+            {openProgrammes && (
+              <div className="absolute top-full left-0 mt-3 w-60 bg-white rounded-xl shadow-xl border z-50">
+
+                <DropdownItem title="Care & Share" />
+                <DropdownItem title="LEAP" />
+                <DropdownItem title="Secondary Education" />
+                <DropdownItem title="Global Scholarships" />
+
+                {/* Tertiary */}
+                {/* Tertiary Education (Side Submenu) */}
+                <div
+                  className="relative group"
+                  onMouseEnter={() => setOpenTertiary(true)}
+                  onMouseLeave={() => setOpenTertiary(false)}
+                >
+                  <button
+                    className="w-full flex items-center justify-between px-4 py-2 font-medium hover:bg-gray-50 hover:text-orange-500 transition"
+                  >
+                    Tertiary Education
+
+                    <ChevronRight
+                      size={16}
+                      className="transition group-hover:translate-x-0.5"
+                    />
+                  </button>
+
+                  {/* Side Submenu */}
+                  {openTertiary && (
+                    <div className="absolute top-0 left-full ml-2 px-5 w-56 bg-white rounded-xl shadow-xl border z-50">
+
+                      <SubMenuItem title="Vocational Training" />
+                      <SubMenuItem title="Local Universities" />
+                      <SubMenuItem title="International Scholarships" />
+
+                    </div>
+                  )}
+                </div>
+
+
+              </div>
+            )}
+
+          </li>
+
+          {/* Contact */}
           <li>
             <Link href="/contact" className="hover:text-orange-500 transition">
               Contact
@@ -70,6 +142,7 @@ export default function Navbar() {
           </li>
 
         </ul>
+
 
         {/* Desktop Button */}
         {/* Desktop Button */}
@@ -166,6 +239,21 @@ export default function Navbar() {
         )}
 
       </nav>
+    </div>
+  );
+}
+function DropdownItem({ title }: { title: string }) {
+  return (
+    <div className="px-4 py-2 hover:bg-gray-50 hover:text-orange-500 cursor-pointer transition">
+      {title}
+    </div>
+  );
+}
+
+function SubMenuItem({ title }: { title: string }) {
+  return (
+    <div className="hover:text-orange-500 cursor-pointer transition">
+      {title}
     </div>
   );
 }

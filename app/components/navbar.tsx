@@ -9,14 +9,12 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-
-
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [openProgrammes, setOpenProgrammes] = useState(false);
-  const [openTertiary, setOpenTertiary] = useState(false);
 
+  const [openPrograms, setOpenPrograms] = useState(false);
+  const [openTertiary, setOpenTertiary] = useState(false);
 
   // Detect scroll
   useEffect(() => {
@@ -25,116 +23,120 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 flex justify-center pt-4">
       <nav
-        className={`w-full max-w-7xl
-    mx-auto px-4 md:px-6 py-3
-    flex items-center justify-between
-    transition-all duration-300 rounded-full
-
-    ${scrolled
+        className={`w-full max-w-7xl mx-auto px-4 md:px-6 py-3
+        flex items-center justify-between
+        transition-all duration-300 rounded-full
+        ${scrolled
             ? "bg-white shadow-xl"
             : "bg-white/90 backdrop-blur-md shadow-lg"
-          }
-  `}
+          }`}
       >
-
 
         {/* Logo */}
         <div className="flex items-center gap-2 md:gap-3">
           <Image
             src="/Logo.svg"
             alt="Elimisha Watoto Logo"
-            width={200}
-            height={200}
+            width={180}
+            height={180}
             priority
           />
         </div>
 
-        {/* Desktop Menu */}
+        {/* ================= Desktop Menu ================= */}
         <ul className="hidden md:flex items-center gap-8 font-medium text-gray-700">
 
-          {/* Home */}
           <li>
             <Link href="/" className="text-orange-500">
               Home
             </Link>
           </li>
 
-          {/* About */}
           <li>
             <Link href="/about" className="hover:text-orange-500 transition">
               About
             </Link>
           </li>
 
-          {/* Programmes Dropdown */}
+          {/* Programs Dropdown */}
           <li className="relative">
 
-            <button
-              onClick={() => setOpenProgrammes(!openProgrammes)}
-              className="flex items-center gap-1 hover:text-orange-500 transition"
+            <div
+              className="relative"
+              onMouseEnter={() => setOpenPrograms(true)}
+              onMouseLeave={() => {
+                setOpenPrograms(false);
+                setOpenTertiary(false);
+              }}
             >
-              Programmes
-              <ChevronDown
-                size={16}
-                className={`transition ${openProgrammes ? "rotate-180" : ""
-                  }`}
-              />
 
-            </button>
+              {/* Button */}
+              <button className="flex items-center gap-1 hover:text-orange-500 transition">
+                Programs
+                <ChevronDown size={16} />
+              </button>
 
-            {/* Dropdown */}
-            {openProgrammes && (
-              <div className="absolute top-full left-0 mt-3 w-60 bg-white rounded-xl shadow-xl border z-50">
+              {/* Dropdown */}
+              {openPrograms && (
+                <div className="absolute left-0 top-full mt-7 bg-white shadow-xl rounded-xl min-w-55 z-50">
 
-                <DropdownItem title="Care & Share" />
-                <DropdownItem title="LEAP" />
-                <DropdownItem title="Secondary Education" />
-                <DropdownItem title="Global Scholarships" />
+                  <ul className="py-2">
 
-                {/* Tertiary */}
-                {/* Tertiary Education (Side Submenu) */}
-                <div
-                  className="relative group"
-                  onMouseEnter={() => setOpenTertiary(true)}
-                  onMouseLeave={() => setOpenTertiary(false)}
-                >
-                  <button
-                    className="w-full flex items-center justify-between px-4 py-2 font-medium hover:bg-gray-50 hover:text-orange-500 transition"
-                  >
-                    Tertiary Education
+                    <DropdownLink href="/programs/care-share" title="Care & Share" />
+                    <DropdownLink href="/programs/leap" title="LEAP" />
+                    <DropdownLink href="/programs/secondary" title="Secondary Education" />
+                    <DropdownLink href="/programs/global" title="Global Scholarships" />
 
-                    <ChevronRight
-                      size={16}
-                      className="transition group-hover:translate-x-0.5"
-                    />
-                  </button>
+                    {/* Tertiary */}
+                    <li
+                      className="relative"
+                      onMouseEnter={() => setOpenTertiary(true)}
+                      onMouseLeave={() => setOpenTertiary(false)}
+                    >
+                      <button className="flex w-full items-center justify-between px-4 py-2 hover:bg-gray-50 hover:text-orange-500 transition">
+                        Tertiary Education
+                        <ChevronRight size={16} />
+                      </button>
 
-                  {/* Side Submenu */}
-                  {openTertiary && (
-                    <div className="absolute top-0 left-full ml-2 px-5 w-56 bg-white rounded-xl shadow-xl border z-50">
+                      {openTertiary && (
+                        <div className="absolute left-full top-0 bg-white shadow-xl rounded-xl min-w-[220px]">
 
-                      <SubMenuItem title="Vocational Training" />
-                      <SubMenuItem title="Local Universities" />
-                      <SubMenuItem title="International Scholarships" />
+                          <ul className="py-2">
 
-                    </div>
-                  )}
+                            <DropdownLink
+                              href="/programs/tertiary/vocational"
+                              title="Vocational Training"
+                            />
+
+                            <DropdownLink
+                              href="/programs/tertiary/local"
+                              title="Local Universities"
+                            />
+
+                            <DropdownLink
+                              href="/programs/tertiary/international"
+                              title="International Scholarships"
+                            />
+
+                          </ul>
+                        </div>
+                      )}
+                    </li>
+
+                  </ul>
                 </div>
+              )}
 
-
-              </div>
-            )}
-
+            </div>
           </li>
 
-          {/* Contact */}
+
           <li>
             <Link href="/contact" className="hover:text-orange-500 transition">
               Contact
@@ -144,89 +146,98 @@ export default function Navbar() {
         </ul>
 
 
-        {/* Desktop Button */}
-        {/* Desktop Button */}
-        {/* Desktop Button */}
+        {/* ================= Desktop Button ================= */}
         <Link
           href="/contact"
           className="hidden md:flex items-center gap-3 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full font-medium transition group"
         >
           GET IN TOUCH
 
-          {/* Icon Circle */}
           <span className="flex items-center justify-center w-7 h-7 bg-white text-orange-500 rounded-full transition group-hover:translate-x-1">
             <ArrowRight size={16} />
           </span>
         </Link>
 
 
-
-        {/* Mobile Menu Button */}
+        {/* ================= Mobile Button ================= */}
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden text-gray-700"
         >
-          {open ? (
-            // Close Icon
-            <svg
-              className="w-7 h-7"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            // Hamburger
-            <svg
-              className="w-7 h-7"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          )}
+          {open ? "✕" : "☰"}
         </button>
 
-        {/* Mobile Menu */}
+
+        {/* ================= Mobile Menu ================= */}
         {open && (
           <div className="absolute top-full left-0 w-full mt-3 bg-white rounded-3xl shadow-xl p-6 md:hidden">
 
-            <ul className="flex flex-col gap-5 text-gray-700 font-medium">
+            <ul className="flex flex-col gap-4 font-medium text-gray-700">
 
+              <MobileLink href="/" title="Home" setOpen={setOpen} />
+              <MobileLink href="/about" title="About" setOpen={setOpen} />
+
+              {/* Mobile Programs */}
               <li>
-                <Link href="/" onClick={() => setOpen(false)}>
-                  Home
-                </Link>
+
+                <button
+                  onClick={() => setOpenPrograms(!openPrograms)}
+                  className="flex w-full justify-between items-center"
+                >
+                  Programs
+                  <ChevronDown
+                    size={16}
+                    className={`transition ${openPrograms ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {openPrograms && (
+                  <ul className="ml-4 mt-2 space-y-2 text-sm">
+
+                    <MobileSubLink href="/programs/care-share" title="Care & Share" setOpen={setOpen} />
+                    <MobileSubLink href="/programs/leap" title="LEAP" setOpen={setOpen} />
+                    <MobileSubLink href="/programs/secondary" title="Secondary Education" setOpen={setOpen} />
+                    <MobileSubLink href="/programs/global" title="Global Scholarships" setOpen={setOpen} />
+
+                    {/* Mobile Tertiary */}
+                    <li>
+
+                      <button
+                        onClick={() => setOpenTertiary(!openTertiary)}
+                        className="flex w-full justify-between items-center"
+                      >
+                        Tertiary Education
+                        <ChevronRight
+                          size={14}
+                          className={`transition ${openTertiary ? "rotate-90" : ""}`}
+                        />
+                      </button>
+
+                      {openTertiary && (
+                        <ul className="ml-4 mt-1 space-y-1">
+
+                          <MobileSubLink href="/programs/tertiary/vocational" title="Vocational Training" setOpen={setOpen} />
+                          <MobileSubLink href="/programs/tertiary/local" title="Local Universities" setOpen={setOpen} />
+                          <MobileSubLink href="/programs/tertiary/international" title="International Scholarships" setOpen={setOpen} />
+
+                        </ul>
+                      )}
+
+                    </li>
+
+                  </ul>
+                )}
+
               </li>
 
-              <li>
-                <Link href="/about" onClick={() => setOpen(false)}>
-                  About
-                </Link>
-              </li>
+              <MobileLink href="/contact" title="Contact" setOpen={setOpen} />
 
-              <li>
-                <Link href="/contact" onClick={() => setOpen(false)}>
-                  Contact
-                </Link>
-              </li>
 
+              {/* Mobile Button */}
               <Link
                 href="/contact"
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-center gap-3 bg-orange-500 text-white py-2 rounded-full mt-2 font-medium group"
+                className="flex items-center justify-center gap-3 bg-orange-500 text-white py-2 rounded-full mt-3 group"
               >
                 Get In Touch
 
@@ -234,6 +245,7 @@ export default function Navbar() {
                   <ArrowRight size={16} />
                 </span>
               </Link>
+
             </ul>
           </div>
         )}
@@ -242,18 +254,43 @@ export default function Navbar() {
     </div>
   );
 }
-function DropdownItem({ title }: { title: string }) {
+
+
+/* ================= Helpers ================= */
+
+function DropdownLink({ href, title }: any) {
   return (
-    <div className="px-4 py-2 hover:bg-gray-50 hover:text-orange-500 cursor-pointer transition">
-      {title}
-    </div>
+    <li>
+      <Link
+        href={href}
+        className="block px-4 py-2 hover:bg-gray-50 hover:text-orange-500 transition"
+      >
+        {title}
+      </Link>
+    </li>
   );
 }
 
-function SubMenuItem({ title }: { title: string }) {
+function MobileLink({ href, title, setOpen }: any) {
   return (
-    <div className="hover:text-orange-500 cursor-pointer transition">
-      {title}
-    </div>
+    <li>
+      <Link href={href} onClick={() => setOpen(false)}>
+        {title}
+      </Link>
+    </li>
+  );
+}
+
+function MobileSubLink({ href, title, setOpen }: any) {
+  return (
+    <li>
+      <Link
+        href={href}
+        onClick={() => setOpen(false)}
+        className="text-gray-600 hover:text-orange-500"
+      >
+        {title}
+      </Link>
+    </li>
   );
 }

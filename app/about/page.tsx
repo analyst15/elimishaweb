@@ -1,11 +1,12 @@
 import Image from "next/image";
+import ImpactStories from "../components/ImpactStories";
 
 export default function AboutPage() {
   return (
     <main className="w-full">
 
       {/* Hero Section */}
-      <section className="relative w-full h-[100vh] min-h-[500px] flex items-center justify-center">
+      <section className="relative w-full h-screen min-h-125 flex items-center justify-center">
 
         {/* Background Image */}
         <Image
@@ -41,6 +42,7 @@ export default function AboutPage() {
         </div>
 
       </section>
+      <ImpactStories />
 
     </main>
   );

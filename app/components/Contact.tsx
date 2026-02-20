@@ -198,7 +198,7 @@ export default function ContactPage() {
                                         <Button
                                             variant="outline"
                                             role="combobox"
-                                            className="w-[160px] justify-between min-h-12"
+                                            className="w-40 justify-between min-h-12"
                                         >
                                             {country
                                                 ? `${country.name} (${country.code})`
@@ -209,7 +209,7 @@ export default function ContactPage() {
 
                                     </PopoverTrigger>
 
-                                    <PopoverContent className="w-[250px] p-0">
+                                    <PopoverContent className="w-62.5 p-0">
 
                                         <Command>
 
@@ -284,7 +284,7 @@ export default function ContactPage() {
                                 name="message"
                                 placeholder="Write your message..."
                                 rows={8}
-                                className="min-h-[200px]"
+                                className="min-h-50"
                                 required
                             />
 

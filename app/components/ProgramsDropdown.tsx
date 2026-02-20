@@ -31,7 +31,7 @@ export default function ProgramsDropdown() {
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute md:left-0 left-0 top-full bg-white shadow-lg rounded-md min-w-[220px] z-50 md:block">
+        <div className="absolute md:left-0 left-0 top-full bg-white shadow-lg rounded-md min-w-55 z-50 md:block">
 
           <ul className="py-2">
 
@@ -93,7 +93,7 @@ export default function ProgramsDropdown() {
 
               {/* Submenu */}
               {subOpen && (
-                <div className="md:absolute md:left-full md:top-0 bg-white shadow-lg rounded-md min-w-[220px] md:mt-0 mt-1">
+                <div className="md:absolute md:left-full md:top-0 bg-white shadow-lg rounded-md min-w-55 md:mt-0 mt-1">
 
                   <ul className="py-2 border-t md:border-0">
 

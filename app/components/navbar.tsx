@@ -16,6 +16,10 @@ export default function Navbar() {
   const [openPrograms, setOpenPrograms] = useState(false);
   const [openTertiary, setOpenTertiary] = useState(false);
 
+  const [openAbout, setOpenAbout] = useState(false);
+  const [openMedia, setOpenMedia] = useState(false);
+
+
   // Detect scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -58,11 +62,85 @@ export default function Navbar() {
             </Link>
           </li>
 
-          <li>
-            <Link href="/about" className="hover:text-orange-500 transition">
-              About
-            </Link>
+          {/* About Dropdown */}
+          <li className="relative">
+            <div
+              className="relative"
+              onMouseEnter={() => setOpenAbout(true)}
+              onMouseLeave={() => setOpenAbout(false)}
+            >
+              {/* Button */}
+              <button className="flex items-center gap-1 hover:text-orange-500 transition">
+                Who We Are
+                <ChevronDown size={16} />
+              </button>
+
+              {/* Dropdown */}
+              {openAbout && (
+                <div className="
+                absolute left-0 top-full
+                bg-white shadow-xl rounded-xl min-w-48 z-50
+                origin-top
+                animate-dropdown
+              ">
+                  <ul className="py-2">
+                    <DropdownLink
+                      href="/about/who-we-are"
+                      title="About Us"
+                    />
+                    <DropdownLink
+                      href="/about/our-team"
+                      title="Our Team"
+                    />
+                    <DropdownLink
+                      href="/about/team"
+                      title="Friends of Elimisha"
+                    />
+                  </ul>
+                </div>
+              )}
+            </div>
           </li>
+
+          <li className="relative">
+            <div
+              className="relative"
+              onMouseEnter={() => setOpenMedia(true)}
+              onMouseLeave={() => setOpenMedia(false)}
+            >
+              {/* Button */}
+              <button className="flex items-center gap-1 hover:text-orange-500 transition">
+                Media
+                <ChevronDown size={16} />
+              </button>
+
+              {/* Dropdown */}
+              {openMedia && (
+                <div className="
+                absolute left-0 top-full
+                bg-white shadow-xl rounded-xl min-w-48 z-50
+                origin-top
+                animate-dropdown
+              ">
+                  <ul className="py-2">
+                    <DropdownLink
+                      href="/about/who-we-are"
+                      title="Blog"
+                    />
+                    <DropdownLink
+                      href="/about/our-team"
+                      title="Testimonials"
+                    />
+                    <DropdownLink
+                      href="/about/team"
+                      title="Gallery"
+                    />
+                  </ul>
+                </div>
+              )}
+            </div>
+          </li>
+
 
           {/* Programs Dropdown */}
           <li className="relative">
@@ -84,7 +162,12 @@ export default function Navbar() {
 
               {/* Dropdown */}
               {openPrograms && (
-                <div className="absolute left-0 top-full mt-7 bg-white shadow-xl rounded-xl min-w-55 z-50">
+                <div className="
+                    absolute left-0 top-full
+                    bg-white shadow-xl rounded-xl min-w-55 z-50
+                    origin-top
+                    animate-dropdown
+                  ">
 
                   <ul className="py-2">
 
@@ -105,7 +188,13 @@ export default function Navbar() {
                       </button>
 
                       {openTertiary && (
-                        <div className="absolute left-full top-0 bg-white shadow-xl rounded-xl min-w-[220px]">
+                        <div className="
+                          absolute left-full top-0
+                          bg-white shadow-xl rounded-xl min-w-55
+                          origin-left
+                          animate-dropdown
+                        ">
+
 
                           <ul className="py-2">
 
@@ -175,7 +264,54 @@ export default function Navbar() {
             <ul className="flex flex-col gap-4 font-medium text-gray-700">
 
               <MobileLink href="/" title="Home" setOpen={setOpen} />
-              <MobileLink href="/about" title="About" setOpen={setOpen} />
+              {/* Mobile About */}
+              <li>
+
+                <button
+                  onClick={() => setOpenAbout(!openAbout)}
+                  className="flex w-full justify-between items-center"
+                >
+                  Who We Are
+                  <ChevronDown
+                    size={16}
+                    className={`transition ${openAbout ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {openAbout && (
+                  <div
+                    className={`
+                      overflow-hidden transition-all duration-300 ease-in-out
+                      ${openAbout ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
+                    `}
+                  >
+                    <ul className="ml-4 mt-2 space-y-2 text-sm">
+
+
+                      <MobileSubLink
+                        href="/about/who-we-are"
+                        title="About Us"
+                        setOpen={setOpen}
+                      />
+
+                      <MobileSubLink
+                        href="/about/our-team"
+                        title="Our Team"
+                        setOpen={setOpen}
+                      />
+
+                      <MobileSubLink
+                        href="/about/team"
+                        title="Friends of Elimisha"
+                        setOpen={setOpen}
+                      />
+
+                    </ul>
+                  </div>
+                )}
+
+              </li>
+
 
               {/* Mobile Programs */}
               <li>
@@ -192,40 +328,55 @@ export default function Navbar() {
                 </button>
 
                 {openPrograms && (
-                  <ul className="ml-4 mt-2 space-y-2 text-sm">
+                  <div
+                    className={`
+                      overflow-hidden transition-all duration-300 ease-in-out
+                      ${openPrograms ? "max-h-125 opacity-100" : "max-h-0 opacity-0"}
+                    `}
+                  >
+                    <ul className="ml-4 mt-2 space-y-2 text-sm">
 
-                    <MobileSubLink href="/programs/care-share" title="Care & Share" setOpen={setOpen} />
-                    <MobileSubLink href="/programs/leap" title="LEAP" setOpen={setOpen} />
-                    <MobileSubLink href="/programs/secondary" title="Secondary Education" setOpen={setOpen} />
-                    <MobileSubLink href="/programs/global" title="Global Scholarships" setOpen={setOpen} />
 
-                    {/* Mobile Tertiary */}
-                    <li>
+                      <MobileSubLink href="/programs/care-share" title="Care & Share" setOpen={setOpen} />
+                      <MobileSubLink href="/programs/leap" title="LEAP" setOpen={setOpen} />
+                      <MobileSubLink href="/programs/secondary" title="Secondary Education" setOpen={setOpen} />
+                      <MobileSubLink href="/programs/global" title="Global Scholarships" setOpen={setOpen} />
 
-                      <button
-                        onClick={() => setOpenTertiary(!openTertiary)}
-                        className="flex w-full justify-between items-center"
-                      >
-                        Tertiary Education
-                        <ChevronRight
-                          size={14}
-                          className={`transition ${openTertiary ? "rotate-90" : ""}`}
-                        />
-                      </button>
+                      {/* Mobile Tertiary */}
+                      <li>
 
-                      {openTertiary && (
-                        <ul className="ml-4 mt-1 space-y-1">
+                        <button
+                          onClick={() => setOpenTertiary(!openTertiary)}
+                          className="flex w-full justify-between items-center"
+                        >
+                          Tertiary Education
+                          <ChevronRight
+                            size={14}
+                            className={`transition ${openTertiary ? "rotate-90" : ""}`}
+                          />
+                        </button>
 
-                          <MobileSubLink href="/programs/tertiary/vocational" title="Vocational Training" setOpen={setOpen} />
-                          <MobileSubLink href="/programs/tertiary/local" title="Local Universities" setOpen={setOpen} />
-                          <MobileSubLink href="/programs/tertiary/international" title="International Scholarships" setOpen={setOpen} />
+                        {openTertiary && (
+                          <div
+                            className={`
+                            overflow-hidden transition-all duration-300 ease-in-out
+                            ${openTertiary ? "max-h-48 opacity-100" : "max-h-0 opacity-0"}
+                          `}
+                          >
+                            <ul className="ml-4 mt-1 space-y-1">
 
-                        </ul>
-                      )}
+                              <MobileSubLink href="/programs/tertiary/vocational" title="Vocational Training" setOpen={setOpen} />
+                              <MobileSubLink href="/programs/tertiary/local" title="Local Universities" setOpen={setOpen} />
+                              <MobileSubLink href="/programs/tertiary/international" title="International Scholarships" setOpen={setOpen} />
 
-                    </li>
+                            </ul>
+                          </div>
+                        )}
 
-                  </ul>
+                      </li>
+
+                    </ul>
+                  </div>
                 )}
 
               </li>

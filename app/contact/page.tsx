@@ -1,63 +1,72 @@
 import Image from "next/image";
+import Contact from "../components/Contact";
 
 export default function ContactPage() {
   return (
-    <section className="relative min-h-screen w-full">
+    <div className="w-full">
 
-      {/* Background Image */}
-      <Image
-        src="/contact-bg.jpg" // 👉 Put your image in /public
-        alt="Contact Background"
-        fill
-        priority
-        className="object-cover"
-      />
+      {/* ================= HERO SECTION ================= */}
+      <section className="relative min-h-screen w-full">
 
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+        {/* Background Image */}
+        <Image
+          src="/contact-bg.jpg"
+          alt="Contact Background"
+          fill
+          priority
+          className="object-cover"
+        />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-32 text-center text-white">
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/50" />
 
-        {/* Heading */}
-        <h1 className="text-4xl md:text-6xl font-bold leading-tight my-20">
-          LET’S CONNECT AND HELP EDUCATE <br />
-          THE FUTURE GENERATION
-        </h1>
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 py-32 text-center text-white">
 
-        {/* Quote */}
-        <p className="max-w-2xl mx-auto text-gray-200 mb-20">
-          “When you educate one mind, you empower a lifetime,
-          and change generations.”
-        </p>
+          {/* Heading */}
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight my-20">
+            LET&apos;S CONNECT AND HELP EDUCATE <br />
+            THE FUTURE GENERATION
+          </h1>
 
-        {/* Contact Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Quote */}
+          <p className="max-w-2xl mx-auto text-gray-200 mb-20">
+            “When you educate one mind, you empower a lifetime,
+            and change generations.”
+          </p>
 
-          {/* Phone */}
-          <ContactCard
-            icon="📱"
-            title="Phone number:"
-            text="+254 753 343 152"
-          />
+          {/* Contact Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-          {/* Location */}
-          <ContactCard
-            icon="📍"
-            title="Our location"
-            text="3rd Floor, Woodvale Place, Westlands, Nairobi"
-          />
+            <ContactCard
+              icon="📱"
+              title="Phone number:"
+              text="+254 753 343 152"
+            />
 
-          {/* Email */}
-          <ContactCard
-            icon="✉️"
-            title="Email address:"
-            text="info@elimishawatoto.org"
-          />
+            <ContactCard
+              icon="📍"
+              title="Our location"
+              text="3rd Floor, Woodvale Place, Westlands, Nairobi"
+            />
 
+            <ContactCard
+              icon="✉️"
+              title="Email address:"
+              text="info@elimishawatoto.org"
+            />
+
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+
+      {/* ================= CONTACT FORM SECTION ================= */}
+      <section className="w-full bg-white">
+        <Contact />
+      </section>
+
+    </div>
   );
 }
 
@@ -75,24 +84,27 @@ function ContactCard({
   text: string;
 }) {
   return (
-    <div className="
-      bg-white/15 backdrop-blur-xl
-      rounded-2xl p-6
-      flex items-center gap-4
-      shadow-xl
-      border border-white/20
-    ">
-
+    <div
+      className="
+        bg-white/15 backdrop-blur-xl
+        rounded-2xl p-6
+        flex items-center gap-4
+        shadow-xl
+        border border-white/20
+      "
+    >
       {/* Icon */}
-      <div className="
-        w-14 h-14
-        rounded-full
-        bg-white
-        flex items-center justify-center
-        text-2xl
-        text-black
-        shrink-0
-      ">
+      <div
+        className="
+          w-14 h-14
+          rounded-full
+          bg-white
+          flex items-center justify-center
+          text-2xl
+          text-black
+          shrink-0
+        "
+      >
         {icon}
       </div>
 

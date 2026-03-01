@@ -1,0 +1,122 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * FIREBASE SECURITY RULES DOCUMENTATION
+     *
+     * Core Philosophy: 
+     * This ruleset implements a strict user-ownership and role-based access control (RBAC) model 
+     * for the "Inkling" blog platform. It prioritizes "Authorization Independence" by ensuring 
+     * documents contain all necessary fields (like authorId) to make security decisions locally 
+     * without expensive cross-document lookups.
+     *
+     * Data Structure:
+     * - /userProfiles/{userId}: Public author profiles, owned by the user.
+     * - /posts/{postId}: Publicly published blog posts, manageable by the author or admins.
+     * - /users/{authorId}/draft_posts/{postId}: Private drafts restricted to the owner.
+     * - /tags/{tagId}: Global categorization tags, publicly readable but admin-managed.
+     *
+     * Key Security Decisions:
+     * 1. Structural Segregation: Drafts and published posts are kept in separate collections 
+     *    to ensure clear security boundaries and safe 'list' operations.
+     * 2. Denormalization: Critical fields (authorId, id) are required within documents 
+     *    to verify ownership against the authenticated UID.
+     * 3. Role-Based Access: Admin operations are verified via a conceptual '/roles' collection 
+     *    structure as defined in the system reasoning.
+     * 4. Prototyping Flexibility: Logic enforces "who" can write but remains flexible 
+     *    on "what" (data types/schema) to allow for rapid UI iteration.
+     */
+
+    // ==========================================
+    // GLOBAL HELPER FUNCTIONS
+    // ==========================================
+
+    /** Checks if the request is from an authenticated user. */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /** Checks if the authenticated user's UID matches the provided ID. */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /** Checks if the user is an owner and the document exists (for updates/deletes). */
+    function isExistingOwner(userId) {
+      return resource != null && isOwner(userId);
+    }
+
+    /** Checks if the authenticated user has administrative privileges via a role document. */
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/roles/admin/$(request.auth.uid));
+    }
+
+    // ==========================================
+    // COLLECTION RULES
+    // ==========================================
+
+    /**
+     * @description Rules for public author profiles. Users can only manage their own profile.
+     * @path /userProfiles/{userId}
+     * @allow (create) if auth.uid == userId.
+     * @deny (update) if auth.uid != userId or if document doesn't exist.
+     * @principle Ownership and ID consistency.
+     */
+    match /userProfiles/{userId} {
+      allow get, list: if true;
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Rules for published blog posts. Publicly readable; updateable by author or admin.
+     * @path /posts/{postId}
+     * @allow (get) for any user.
+     * @deny (update) if user is not the authorId stored in the document.
+     * @principle Owner-only writes with public read access.
+     */
+    match /posts/{postId} {
+      allow get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.authorId == request.auth.uid;
+      allow update: if resource != null && (resource.data.authorId == request.auth.uid || isAdmin());
+      allow delete: if resource != null && (resource.data.authorId == request.auth.uid || isAdmin());
+    }
+
+    /**
+     * @description Rules for private draft posts. Restricted entirely to the author's UID tree.
+     * @path /users/{authorId}/draft_posts/{postId}
+     * @allow (list) only for the owner (authorId).
+     * @deny (get) for any user other than the owner.
+     * @principle Path-based structural segregation for private data.
+     */
+    match /users/{authorId}/draft_posts/{postId} {
+      allow get, list: if isOwner(authorId);
+      allow create: if isOwner(authorId) && request.resource.data.authorId == authorId;
+      allow update: if isExistingOwner(authorId) && request.resource.data.authorId == resource.data.authorId;
+      allow delete: if isExistingOwner(authorId);
+    }
+
+    /**
+     * @description Rules for global categorization tags. Readable by all; manageable only by admins.
+     * @path /tags/{tagId}
+     * @allow (list) for everyone.
+     * @deny (create) for non-admin users.
+     * @principle Role-Based Access Control (RBAC).
+     */
+    match /tags/{tagId} {
+      allow get, list: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    /**
+     * @description Conceptual roles collection used for RBAC checks.
+     * @path /roles/{role}/{uid}
+     */
+    match /roles/{role}/{uid} {
+      allow read: if isSignedIn();
+      allow write: if false; // Roles should only be assigned via Admin SDK or Cloud Functions.
+    }
+  }
+}

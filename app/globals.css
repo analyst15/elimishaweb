@@ -131,6 +131,9 @@
   animation: dropdownIn 0.2s ease-out forwards;
 }
 
+.btn-editor {
+  @apply px-3 py-1 border rounded text-sm hover:bg-gray-100 transition;
+}
 
 @layer base {
   * {

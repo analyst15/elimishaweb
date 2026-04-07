@@ -1,0 +1,17 @@
+
+{
+  "blogHero": {
+    "url": "https://picsum.photos/seed/ink-hero/1200/675",
+    "width": 1200,
+    "height": 675,
+    "alt": "The Daily Ink Hero Image",
+    "hint": "minimalist workspace"
+  },
+  "postPlaceholder": {
+    "url": "https://picsum.photos/seed/ink-story/800/450",
+    "width": 800,
+    "height": 450,
+    "alt": "Post cover image",
+    "hint": "abstract texture"
+  }
+}
